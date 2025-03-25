@@ -19,5 +19,5 @@ export function useSidebarInit() {
     }
 
     prevWidthRef.current = width;
-  }, [width, isOpen, setIsOpenBasedOnWidth]);
+  }, [width, isOpen]);
 }

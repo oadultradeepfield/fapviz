@@ -9,7 +9,5 @@ interface SidebarStore {
 export const useSidebarStore = create<SidebarStore>((set) => ({
   isOpen: false,
   setIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
-  setIsOpenBasedOnWidth: (width: number) => {
-    set({ isOpen: width >= 1024 });
-  },
+  setIsOpenBasedOnWidth: (width) => set({ isOpen: width >= 1024 }),
 }));
