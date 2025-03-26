@@ -1,5 +1,5 @@
-import Navigation from "@/components/Navigation/Navigation";
-import Sidebar from "@/components/Sidebar/Sidebar";
+import Navigation from "@/components/navigation/navigation";
+import Sidebar from "@/components/sidebar/sidebar";
 
 export default function Home() {
   return (

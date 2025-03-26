@@ -1,10 +1,10 @@
 "use client";
 
-import { useSidebarStore } from "@/stores/sidebarStore";
+import { useSidebarStore } from "@/stores/sidebar-store";
 import { cn } from "@/lib/utils";
-import { DoubleArrowLeftIcon } from "@radix-ui/react-icons";
-import IconButton from "../Navigation/IconButton";
-import { useSidebarInit } from "@/hooks/useSidebarInit";
+import IconButton from "../navigation/icon-button";
+import { useSidebarInit } from "@/hooks/sidebar-init";
+import { ChevronsLeft } from "lucide-react";
 
 export default function Sidebar() {
   useSidebarInit();
@@ -13,7 +13,7 @@ export default function Sidebar() {
   return (
     <div
       className={cn(
-        "fixed top-0 left-0 -z-10 h-full w-80 border-r-2 border-gray-200 bg-gray-100 text-stone-900 transition-all duration-500",
+        "bg-sidebar-primary-foreground border-sidebar-border fixed top-0 left-0 -z-10 h-full w-80 border-r transition-all duration-500",
         isOpen ? "translate-x-0" : "-translate-x-full",
       )}
     >
@@ -22,9 +22,9 @@ export default function Sidebar() {
         <IconButton
           aria-label="Close Sidebar"
           onClick={setIsOpen}
-          style="light"
+          variant="ghost"
         >
-          <DoubleArrowLeftIcon className="h-5 w-5"></DoubleArrowLeftIcon>
+          <ChevronsLeft className="scale-125" />
         </IconButton>
       </div>
     </div>

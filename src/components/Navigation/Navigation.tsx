@@ -1,11 +1,11 @@
 "use client";
 
-import { QuestionMarkCircledIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
-
-import AppLogo from "../Common/AppLogo";
-import IconButton from "./IconButton";
-import ToggleSidebarButton from "./ToggleSidebarButton";
-import { useSidebarStore } from "@/stores/sidebarStore";
+import AppLogo from "../common/app-logo";
+import IconButton from "./icon-button";
+import ToggleSidebarButton from "./toggle-sidebar-button";
+import { useSidebarStore } from "@/stores/sidebar-store";
+import { Icons } from "../ui/icons";
+import { HelpCircleIcon } from "lucide-react";
 
 export default function Navigation() {
   const { setIsOpen } = useSidebarStore();
@@ -17,29 +17,27 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-stone-800 p-3">
+    <nav className="bg-foreground p-3">
       <div className="container mx-auto flex max-w-full items-center justify-between">
         <ToggleSidebarButton aria-label="Toggle Sidebar" onClick={setIsOpen} />
         <div className="flex flex-1 items-center justify-center gap-3">
           <AppLogo size={40} />
-          <div className="text-2xl font-semibold text-gray-100">FAPViz</div>
+          <div className="text-background text-2xl font-semibold">FAPViz</div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <IconButton
             aria-label="Help"
             onClick={handleClickHelp}
             tooltipMessage="Help"
-            style="dark"
           >
-            <QuestionMarkCircledIcon className="h-6 w-6" />
+            <HelpCircleIcon className="scale-125" />
           </IconButton>
           <IconButton
             aria-label="Visit GitHub Repository"
             onClick={handleClickGithub}
             tooltipMessage="Visit Repo"
-            style="dark"
           >
-            <GitHubLogoIcon className="h-6 w-6" />
+            <Icons.gitHub className="scale-125" />
           </IconButton>
         </div>
       </div>
