@@ -17,7 +17,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="relative z-10 bg-stone-800 p-3">
+    <nav className="bg-stone-800 p-3">
       <div className="container mx-auto flex max-w-full items-center justify-between">
         <ToggleSidebarButton aria-label="Toggle Sidebar" onClick={setIsOpen} />
         <div className="flex flex-1 items-center justify-center gap-3">

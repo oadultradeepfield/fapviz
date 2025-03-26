@@ -1,8 +1,10 @@
-import { Tooltip } from "radix-ui";
+import { Tooltip } from "@base-ui-components/react/tooltip";
 import TooltipAnimation from "./TooltipAnimation";
+import React from "react";
+import ArrowSvg from "./ArrowSvg";
 
 interface CustomTooltipProps {
-  trigger: React.ReactNode;
+  trigger: React.ReactElement<Record<string, unknown>, string>;
   tooltipMessage: string;
 }
 
@@ -11,16 +13,20 @@ export default function CustomTooltip({
   tooltipMessage,
 }: CustomTooltipProps) {
   return (
-    <Tooltip.Provider delayDuration={300}>
+    <Tooltip.Provider delay={300}>
       <Tooltip.Root>
-        <Tooltip.Trigger asChild>{trigger}</Tooltip.Trigger>
+        <Tooltip.Trigger render={trigger} />
         <Tooltip.Portal>
-          <Tooltip.Content asChild>
-            <TooltipAnimation>
-              {tooltipMessage}
-              <Tooltip.Arrow className="fill-stone-900" />
-            </TooltipAnimation>
-          </Tooltip.Content>
+          <Tooltip.Positioner sideOffset={5}>
+            <Tooltip.Popup>
+              <TooltipAnimation>
+                {tooltipMessage}
+                <Tooltip.Arrow className="data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90 data-[side=right]:left-[-13px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180">
+                  <ArrowSvg />
+                </Tooltip.Arrow>
+              </TooltipAnimation>
+            </Tooltip.Popup>
+          </Tooltip.Positioner>
         </Tooltip.Portal>
       </Tooltip.Root>
     </Tooltip.Provider>
