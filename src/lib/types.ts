@@ -1,4 +1,8 @@
-export type ColorPaletteName = "Vivid Labels" | "Pastel Brights" | "Neon Cyber";
+export enum ColorPaletteName {
+  VividLabels = "Vivid Labels",
+  PastelBrights = "Pastel Brights",
+  NeonCyber = "Neon Cyber",
+}
 
 export interface ColorPalette {
   paletteName: ColorPaletteName;
@@ -28,18 +32,23 @@ export interface Graph {
 
 export type AdjacencyList = Record<string, string[]>;
 
-export type AlgorithmName =
-  | "Greedy"
-  | "Backtracking"
-  | "DSatur"
-  | "Welsh-Powell";
+export enum AlgorithmName {
+  Backtracking = "Backtracking",
+  Greedy = "Greedy",
+  DSatur = "DSatur",
+  WelshPowell = "Welsh-Powell",
+}
 
 export interface Algorithm {
   algorithmName: AlgorithmName;
   algorithm: (graph: AdjacencyList) => void;
 }
 
-export type SpeedName = "Slow" | "Normal" | "Fast";
+export enum SpeedName {
+  Slow = "Slow (0.5x)",
+  Normal = "Normal",
+  Fast = "Fast (2x)",
+}
 
 export interface Speed {
   speedName: SpeedName;

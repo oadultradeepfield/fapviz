@@ -1,7 +1,7 @@
 import { AlgorithmName, ColorPaletteName, SpeedName } from "@/lib/types";
 import { create } from "zustand";
 
-interface ConfigurationStore {
+interface AlgorithmConfigStore {
   algorithm: AlgorithmName;
   colorPalette: ColorPaletteName;
   speed: SpeedName;
@@ -10,10 +10,10 @@ interface ConfigurationStore {
   setSpeed: (speed: SpeedName) => void;
 }
 
-export const useConfigurationStore = create<ConfigurationStore>((set) => ({
-  algorithm: "Greedy",
-  colorPalette: "Vivid Labels",
-  speed: "Normal",
+export const useAlgorithmConfigStore = create<AlgorithmConfigStore>((set) => ({
+  algorithm: AlgorithmName.Backtracking,
+  colorPalette: ColorPaletteName.VividLabels,
+  speed: SpeedName.Normal,
   setAlgorithm: (algorithm) => set({ algorithm }),
   setColorPalette: (colorPalette) => set({ colorPalette }),
   setSpeed: (speed) => set({ speed }),

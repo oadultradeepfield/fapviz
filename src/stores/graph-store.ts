@@ -10,7 +10,7 @@ import { Graph, Node, Edge, AdjacencyList } from "@/lib/types";
 
 // TODO: Add the actual `GraphCanvas` state from Reagraph
 
-interface CanvasStore {
+interface GraphStore {
   graph: Graph;
   adjacencyList?: AdjacencyList;
   nodeCounter: number;
@@ -23,7 +23,7 @@ interface CanvasStore {
   deleteEdge: (id: string) => void;
 }
 
-export const useCanvasStore = create<CanvasStore>((set) => ({
+export const useGraphStore = create<GraphStore>((set) => ({
   graph: { nodes: [], edges: [] },
   adjacencyList: undefined,
   nodeCounter: 0,
