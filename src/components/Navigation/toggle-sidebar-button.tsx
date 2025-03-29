@@ -1,7 +1,7 @@
 "use client";
 
 import { useSidebarStore } from "@/stores/sidebar-store";
-import { MenuIcon } from "lucide-react";
+import { Menu } from "lucide-react";
 import CustomTooltip from "../common/custom-tooltip";
 import { Button } from "../ui/button";
 
@@ -17,7 +17,7 @@ export default function ToggleSidebarButton({
 
   const button = (
     <Button onClick={onClick} size="icon">
-      <MenuIcon className="scale-125" />
+      <Menu className="scale-125" />
     </Button>
   );
 

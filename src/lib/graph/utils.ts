@@ -1,25 +1,7 @@
-import { Node as RFNode, Edge as RfEdge } from "@xyflow/react";
+import { Edge } from "@xyflow/react";
 import { ColorPalettes } from "../color/constants";
 import { ColorPaletteName } from "../color/types";
-import { AdjacencyList, Edge, Graph, Node } from "./types";
-
-export const createReactFlowNodes = (nodes: Node[]): RFNode[] => {
-  return nodes.map((node) => ({
-    id: node.id,
-    type: "circular",
-    data: { label: node.label, fill: node.fill },
-    position: { x: 0, y: 50 },
-  }));
-};
-
-export const createReactFlowEdges = (edges: Edge[]): RfEdge[] => {
-  return edges.map((edge) => ({
-    id: edge.id,
-    source: edge.source,
-    target: edge.target,
-    label: edge.label,
-  }));
-};
+import { AdjacencyList, Graph, Node } from "./types";
 
 export const updateNodeInList = (
   nodes: Node[],
@@ -124,7 +106,7 @@ export const setNodeFill = (
   colorPaletteName: ColorPaletteName,
 ): Node => {
   if (!node.colorIndex) {
-    throw ReferenceError("Color index is undefined");
+    throw new ReferenceError("Color index is undefined");
   }
 
   const colorPalette = ColorPalettes.find(
@@ -143,6 +125,9 @@ export const setNodeFill = (
 
   return {
     ...node,
-    fill: colorPalette.colors[node.colorIndex],
+    style: {
+      ...node.style,
+      backgroundColor: colorPalette.colors[node.colorIndex],
+    },
   };
 };

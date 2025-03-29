@@ -1,5 +1,5 @@
 import { EMPTY_GRAPH } from "@/lib/graph/constants";
-import { AdjacencyList, Edge, Graph, Node } from "@/lib/graph/types";
+import { AdjacencyList, Graph, Node } from "@/lib/graph/types";
 import {
   addEdge,
   addNode,
@@ -7,6 +7,7 @@ import {
   removeEdge,
   removeNode,
 } from "@/lib/graph/utils";
+import { Position, type Edge } from "@xyflow/react";
 import { create } from "zustand";
 
 interface GraphStore {
@@ -20,6 +21,10 @@ interface GraphStore {
   setAdjacencyList: () => void;
   createNode: () => void;
   createEdge: (source: string, target: string) => void;
+  updateNodePosition: (
+    id: string,
+    newPosition: { x: number; y: number },
+  ) => void;
   deleteNode: (id: string) => void;
   deleteEdge: (id: string) => void;
 }
@@ -59,11 +64,30 @@ export const useGraphStore = create<GraphStore>((set) => ({
 
   createNode: () => {
     set((state) => {
+      const counter = state.nodeCounter;
+      const gridSize = 100;
+      const gridCols = 5;
+
+      const col = counter % gridCols;
+      const row = Math.floor(counter / gridCols);
+
+      const offsetX = (counter % 7) * 5;
+      const offsetY = (counter % 11) * 5;
+
       const newNode: Node = {
-        id: state.nodeCounter.toString(),
-        label: `Node ${state.nodeCounter}`,
-        colorIndex: undefined,
-        fill: undefined,
+        id: counter.toString(),
+        data: { label: "📡" },
+        style: {
+          width: 50,
+          height: 50,
+          fontSize: 20,
+        },
+        position: {
+          x: col * gridSize + offsetX,
+          y: row * gridSize + offsetY,
+        },
+        sourcePosition: Position.Right,
+        targetPosition: Position.Left,
         degree: 0,
         saturationDegree: 0,
       };
@@ -90,6 +114,16 @@ export const useGraphStore = create<GraphStore>((set) => ({
       };
     });
   },
+
+  updateNodePosition: (id, newPosition) =>
+    set((state) => {
+      const updatedNodes = state.graph.nodes.map((node) =>
+        node.id === id ? { ...node, position: newPosition } : node,
+      );
+      return {
+        graph: { ...state.graph, nodes: updatedNodes },
+      };
+    }),
 
   deleteNode: (id) => {
     set((state) => ({ graph: removeNode(state.graph, { id } as Node) }));

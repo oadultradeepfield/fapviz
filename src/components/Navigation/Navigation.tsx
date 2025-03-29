@@ -1,7 +1,7 @@
 "use client";
 
 import { useSidebarStore } from "@/stores/sidebar-store";
-import { HelpCircleIcon } from "lucide-react";
+import { HelpCircle } from "lucide-react";
 import AppLogo from "../common/app-logo";
 import { Icons } from "../ui/icons";
 import IconButton from "./icon-button";
@@ -30,7 +30,7 @@ export default function Navigation() {
             onClick={handleClickHelp}
             tooltipMessage="Help"
           >
-            <HelpCircleIcon className="scale-125" />
+            <HelpCircle className="scale-125" />
           </IconButton>
           <IconButton
             aria-label="Visit GitHub Repository"

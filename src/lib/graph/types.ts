@@ -1,17 +1,9 @@
-export interface Node {
-  id: string;
-  label: string;
+import { type Edge, type Node as RFNode } from "@xyflow/react";
+
+export interface Node extends RFNode {
   colorIndex?: number;
-  fill?: string;
   degree?: number;
   saturationDegree?: number;
-}
-
-export interface Edge {
-  id: string;
-  label: string;
-  source: string;
-  target: string;
 }
 
 export interface Graph {
