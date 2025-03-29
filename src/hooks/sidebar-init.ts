@@ -1,8 +1,8 @@
 "use client";
 
+import { useWindowSize } from "@/hooks/window-size";
 import { useSidebarStore } from "@/stores/sidebar-store";
 import { useEffect, useRef } from "react";
-import { useWindowSize } from "@/hooks/window-size";
 
 export function useSidebarInit() {
   const { isOpen, setIsOpenBasedOnWidth } = useSidebarStore();

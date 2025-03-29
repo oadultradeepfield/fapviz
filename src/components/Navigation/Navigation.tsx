@@ -1,11 +1,11 @@
 "use client";
 
+import { useSidebarStore } from "@/stores/sidebar-store";
+import { HelpCircleIcon } from "lucide-react";
 import AppLogo from "../common/app-logo";
+import { Icons } from "../ui/icons";
 import IconButton from "./icon-button";
 import ToggleSidebarButton from "./toggle-sidebar-button";
-import { useSidebarStore } from "@/stores/sidebar-store";
-import { Icons } from "../ui/icons";
-import { HelpCircleIcon } from "lucide-react";
 
 export default function Navigation() {
   const { setIsOpen } = useSidebarStore();
@@ -17,7 +17,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-foreground p-3">
+    <nav className="bg-foreground relative z-30 p-3">
       <div className="container mx-auto flex max-w-full items-center justify-between">
         <ToggleSidebarButton aria-label="Toggle Sidebar" onClick={setIsOpen} />
         <div className="flex flex-1 items-center justify-center gap-3">

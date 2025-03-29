@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   Card,
   CardContent,
@@ -7,8 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import TemplateButtons from "./template-buttons";
 import ManualButtons from "./manual-button";
+import TemplateButtons from "./template-buttons";
 
 export default function GraphConfig() {
   return (

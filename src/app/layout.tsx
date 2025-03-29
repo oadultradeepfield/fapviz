@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
@@ -31,6 +32,7 @@ export default function RootLayout({
         className={`${interSans.variable} ${robotoMono.variable} antialiased`}
       >
         {children}
+        <Toaster expand={true} />
       </body>
     </html>
   );

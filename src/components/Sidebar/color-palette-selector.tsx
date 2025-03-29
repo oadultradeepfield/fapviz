@@ -1,4 +1,3 @@
-import { ColorPaletteName } from "@/lib/types";
 import {
   FormControl,
   FormField,
@@ -13,8 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ColorPaletteName } from "@/lib/color/types";
 import { useAlgorithmConfigStore } from "@/stores/algorithm-config-store";
-import ColorPaletteIcon from "./color-palette-icon";
+import ColorPaletteIcon from "../common/color-palette-icon";
 
 interface ColorPaletteSelectorProps {
   control: any;
@@ -48,7 +48,11 @@ export default function ColorPaletteSelector({
               {Object.values(ColorPaletteName).map((palette) => (
                 <SelectItem key={palette} value={palette}>
                   <div className="flex items-center gap-3">
-                    <ColorPaletteIcon colorPaletteName={palette} />
+                    <ColorPaletteIcon
+                      colorPaletteName={palette}
+                      numColors={4}
+                      showTooltip={false}
+                    />
                     {palette}
                   </div>
                 </SelectItem>

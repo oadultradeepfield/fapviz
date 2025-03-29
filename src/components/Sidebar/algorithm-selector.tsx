@@ -1,4 +1,3 @@
-import { AlgorithmName } from "@/lib/types";
 import {
   FormControl,
   FormField,
@@ -9,14 +8,15 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
-  SelectGroup,
-  SelectLabel,
 } from "@/components/ui/select";
+import { ALGORITHMS } from "@/lib/algorithm/constants";
+import { AlgorithmName } from "@/lib/algorithm/types";
 import { useAlgorithmConfigStore } from "@/stores/algorithm-config-store";
-import { Algorithms } from "@/lib/constants";
 
 interface AlgorithmSelectorProps {
   control: any;
@@ -45,7 +45,7 @@ export default function AlgorithmSelector({ control }: AlgorithmSelectorProps) {
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {Object.entries(Algorithms).map(([group, algorithms]) => (
+              {Object.entries(ALGORITHMS).map(([group, algorithms]) => (
                 <SelectGroup key={group}>
                   <SelectLabel>{group}</SelectLabel>
                   {algorithms.map((algorithm) => (

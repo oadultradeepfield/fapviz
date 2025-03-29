@@ -1,9 +1,9 @@
 "use client";
 
-import CustomTooltip from "../common/custom-tooltip";
 import { useSidebarStore } from "@/stores/sidebar-store";
-import { Button } from "../ui/button";
 import { MenuIcon } from "lucide-react";
+import CustomTooltip from "../common/custom-tooltip";
+import { Button } from "../ui/button";
 
 interface ToggleSidebarButtonProps {
   onClick: () => void;

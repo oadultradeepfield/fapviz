@@ -1,21 +1,22 @@
-import { create } from "zustand";
+import { EMPTY_GRAPH } from "@/lib/graph/constants";
+import { AdjacencyList, Edge, Graph, Node } from "@/lib/graph/types";
 import {
-  addNode,
-  removeNode,
   addEdge,
-  removeEdge,
+  addNode,
   createAdjacencyList,
-} from "@/lib/utils";
-import { Graph, Node, Edge, AdjacencyList } from "@/lib/types";
-
-// TODO: Add the actual `GraphCanvas` state from Reagraph
+  removeEdge,
+  removeNode,
+} from "@/lib/graph/utils";
+import { create } from "zustand";
 
 interface GraphStore {
   graph: Graph;
   adjacencyList?: AdjacencyList;
   nodeCounter: number;
   edgeCounter: number;
+  graphBackup: Graph;
   clearGraph: () => void;
+  undoClearGraph: () => void;
   setAdjacencyList: () => void;
   createNode: () => void;
   createEdge: (source: string, target: string) => void;
@@ -24,18 +25,32 @@ interface GraphStore {
 }
 
 export const useGraphStore = create<GraphStore>((set) => ({
-  graph: { nodes: [], edges: [] },
+  graph: EMPTY_GRAPH,
   adjacencyList: undefined,
   nodeCounter: 0,
   edgeCounter: 0,
+  graphBackup: EMPTY_GRAPH,
 
   clearGraph: () => {
-    set({
-      graph: { nodes: [], edges: [] },
-      adjacencyList: undefined,
-      nodeCounter: 0,
-      edgeCounter: 0,
+    set((state) => {
+      const backup = state.graph;
+      return {
+        graph: EMPTY_GRAPH,
+        graphBackup: backup,
+        adjacencyList: undefined,
+        nodeCounter: 0,
+        edgeCounter: 0,
+      };
     });
+  },
+
+  undoClearGraph: () => {
+    set((state) => ({
+      graph: state.graphBackup,
+      adjacencyList: createAdjacencyList(state.graphBackup),
+      nodeCounter: state.graphBackup.nodes.length,
+      edgeCounter: state.graphBackup.edges.length,
+    }));
   },
 
   setAdjacencyList: () => {

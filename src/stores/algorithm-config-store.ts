@@ -1,4 +1,5 @@
-import { AlgorithmName, ColorPaletteName, SpeedName } from "@/lib/types";
+import { AlgorithmName, SpeedName } from "@/lib/algorithm/types";
+import { ColorPaletteName } from "@/lib/color/types";
 import { create } from "zustand";
 
 interface AlgorithmConfigStore {

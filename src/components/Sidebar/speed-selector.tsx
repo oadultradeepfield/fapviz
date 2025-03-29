@@ -1,4 +1,3 @@
-import { SpeedName } from "@/lib/types";
 import {
   FormControl,
   FormField,
@@ -13,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SpeedName } from "@/lib/algorithm/types";
 import { useAlgorithmConfigStore } from "@/stores/algorithm-config-store";
 
 interface SpeedSelectorProps {
