@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Dices, Map, Star } from "lucide-react";
+import { Boxes, Dices, Star } from "lucide-react";
 
 export default function TemplateButtons() {
   return (
@@ -11,7 +11,7 @@ export default function TemplateButtons() {
           <Star /> Petersen graph
         </Button>
         <Button variant="outline">
-          <Map /> Four color theorem
+          <Boxes /> Complete graph
         </Button>
         <Button variant="outline">
           <Dices /> Random graph (10 nodes)

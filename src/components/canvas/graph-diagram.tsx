@@ -1,5 +1,7 @@
 "use client";
 
+import { useDeleteElements } from "@/hooks/delete-elements";
+import { useIsValidConnection } from "@/hooks/is-valid-connection";
 import { useOnConnect } from "@/hooks/on-connect";
 import { useOnNodeDragStop } from "@/hooks/on-node-drag-stop";
 import { EMPTY_GRAPH } from "@/lib/graph/constants";
@@ -13,9 +15,11 @@ import {
 import "@xyflow/react/dist/style.css";
 
 export default function GraphDiagram() {
-  const { graph } = useGraphStore();
+  const { graph, setSelectedElements } = useGraphStore();
   const onNodeDragStop = useOnNodeDragStop();
   const onConnect = useOnConnect();
+  const isValidConnection = useIsValidConnection();
+  const handleDelete = useDeleteElements();
 
   return (
     <div style={{ height: "100%" }}>
@@ -27,6 +31,9 @@ export default function GraphDiagram() {
           edges={graph.edges}
           onNodeDragStop={onNodeDragStop}
           onConnect={onConnect}
+          isValidConnection={isValidConnection}
+          onSelectionChange={setSelectedElements}
+          onDelete={handleDelete}
           fitView
         >
           <Background />

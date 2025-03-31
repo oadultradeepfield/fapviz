@@ -1,23 +1,24 @@
 import { useGraphStore } from "@/stores/graph-store";
+import { useCallback } from "react";
 import { toast } from "sonner";
 
 export function useGraphReset() {
-  const { clearGraph, undoClearGraph } = useGraphStore();
+  const { clearGraph, undoDeleteElements } = useGraphStore();
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     toast(
-      "Graph reset successfully! You can start fresh or undo this action.",
+      "All transmitters were removed! You can start fresh or undo this action.",
       {
         action: {
           label: "Undo",
-          onClick: undoClearGraph,
+          onClick: undoDeleteElements,
         },
-        duration: 5000,
+        duration: 3000,
         position: "bottom-center",
       },
     );
     clearGraph();
-  };
+  }, [clearGraph, undoDeleteElements]);
 
-  return { handleReset };
+  return handleReset;
 }

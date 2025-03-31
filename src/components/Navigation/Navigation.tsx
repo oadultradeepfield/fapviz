@@ -1,7 +1,7 @@
 "use client";
 
 import { useSidebarStore } from "@/stores/sidebar-store";
-import { HelpCircle } from "lucide-react";
+import { Share } from "lucide-react";
 import AppLogo from "../common/app-logo";
 import { Icons } from "../ui/icons";
 import IconButton from "./icon-button";
@@ -9,8 +9,6 @@ import ToggleSidebarButton from "./toggle-sidebar-button";
 
 export default function Navigation() {
   const { setIsOpen } = useSidebarStore();
-
-  const handleClickHelp = () => {};
 
   const handleClickGithub = () => {
     window.open("https://www.github.com/oadultradeepfield/fapviz", "_blank");
@@ -26,11 +24,11 @@ export default function Navigation() {
         </div>
         <div className="flex items-center space-x-3">
           <IconButton
-            aria-label="Help"
-            onClick={handleClickHelp}
-            tooltipMessage="Help"
+            aria-label="Share Current Graph"
+            onClick={handleClickGithub}
+            tooltipMessage="Share"
           >
-            <HelpCircle className="scale-125" />
+            <Share className="scale-125" />
           </IconButton>
           <IconButton
             aria-label="Visit GitHub Repository"

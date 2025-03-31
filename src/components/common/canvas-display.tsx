@@ -2,9 +2,10 @@
 
 import { useAlgorithmConfigStore } from "@/stores/algorithm-config-store";
 import { useAnswerStore } from "@/stores/answer-store";
+import DeleteButton from "../canvas/delete-button";
 import ColorPaletteIcon from "./color-palette-icon";
 
-export default function AnswerDisplay() {
+export default function CanvasDisplay() {
   const { chromaticIndex } = useAnswerStore();
   const { colorPalette } = useAlgorithmConfigStore();
 
@@ -19,6 +20,7 @@ export default function AnswerDisplay() {
         numColors={chromaticIndex || 0}
         showTooltip={true}
       />
+      <DeleteButton />
     </div>
   );
 }

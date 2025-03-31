@@ -1,5 +1,5 @@
 import GraphDiagram from "@/components/canvas/graph-diagram";
-import AnswerDisplay from "@/components/common/answer-display";
+import CanvasDisplay from "@/components/common/canvas-display";
 import Navigation from "@/components/navigation/navigation";
 import Sidebar from "@/components/sidebar/sidebar";
 
@@ -9,7 +9,7 @@ export default function Home() {
       <Navigation />
       <main className="mx-auto flex w-full flex-grow flex-col p-4">
         <Sidebar />
-        <AnswerDisplay />
+        <CanvasDisplay />
         <div className="flex-grow">
           <GraphDiagram />
         </div>
