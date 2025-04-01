@@ -1,30 +1,24 @@
 import {
   COUNTER_STORAGE_KEY,
-  EMPTY_GRAPH,
   GRAPH_STORAGE_KEY,
+  NODE_STYLE,
+  TEMPLATE_GRAPHS,
 } from "@/lib/graph/constants";
-import { AdjacencyList, Graph, Node } from "@/lib/graph/types";
-import {
-  addEdge,
-  addNode,
-  createAdjacencyList,
-  removeEdge,
-  removeNode,
-} from "@/lib/graph/utils";
+import { Graph, Node, TemplateGraphName } from "@/lib/graph/types";
+import { addEdge, addNode, removeEdge, removeNode } from "@/lib/graph/utils";
 import { Position, type Edge } from "@xyflow/react";
 import { create } from "zustand";
 
 interface GraphStore {
   graph: Graph;
-  adjacencyList?: AdjacencyList;
   nodeCounter: number;
   graphBackup: Graph;
   selectedNodes: string[];
   selectedEdges: string[];
+  setGraphFromTemplate: (graphName: TemplateGraphName) => void;
   setSelectedElements: ({ nodes, edges }: Graph) => void;
   clearGraph: () => void;
   undoDeleteElements: () => void;
-  setAdjacencyList: () => void;
   createNode: () => void;
   createEdge: (source: string, target: string) => void;
   updateNodePosition: (
@@ -36,9 +30,9 @@ interface GraphStore {
 
 export const useGraphStore = create<GraphStore>((set) => {
   const loadGraphFromStorage = (): Graph => {
-    if (typeof window === "undefined") return EMPTY_GRAPH;
+    if (typeof window === "undefined") return TEMPLATE_GRAPHS.EMPTY_GRAPH;
     const storedGraph = localStorage.getItem(GRAPH_STORAGE_KEY);
-    return storedGraph ? JSON.parse(storedGraph) : EMPTY_GRAPH;
+    return storedGraph ? JSON.parse(storedGraph) : TEMPLATE_GRAPHS.EMPTY_GRAPH;
   };
 
   const loadCounterFromStorage = (): number => {
@@ -61,11 +55,22 @@ export const useGraphStore = create<GraphStore>((set) => {
 
   return {
     graph: loadGraphFromStorage(),
-    adjacencyList: undefined,
     nodeCounter: loadCounterFromStorage(),
-    graphBackup: EMPTY_GRAPH,
+    graphBackup: TEMPLATE_GRAPHS.EMPTY_GRAPH,
     selectedNodes: [],
     selectedEdges: [],
+
+    setGraphFromTemplate: (graphName) => {
+      set(() => {
+        const templateGraph = TEMPLATE_GRAPHS[graphName];
+        saveGraphToStorage(templateGraph);
+        saveCounterToStorage(templateGraph.nodes.length);
+        return {
+          graph: templateGraph,
+          nodeCounter: templateGraph.nodes.length,
+        };
+      });
+    },
 
     setSelectedElements: ({ nodes, edges }) => {
       set(() => ({
@@ -77,12 +82,11 @@ export const useGraphStore = create<GraphStore>((set) => {
     clearGraph: () => {
       set((state) => {
         const backup = state.graph;
-        saveGraphToStorage(EMPTY_GRAPH);
+        saveGraphToStorage(TEMPLATE_GRAPHS.EMPTY_GRAPH);
         saveCounterToStorage(0);
         return {
-          graph: EMPTY_GRAPH,
+          graph: TEMPLATE_GRAPHS.EMPTY_GRAPH,
           graphBackup: backup,
-          adjacencyList: undefined,
           nodeCounter: 0,
         };
       });
@@ -95,14 +99,9 @@ export const useGraphStore = create<GraphStore>((set) => {
         saveCounterToStorage(count);
         return {
           graph: state.graphBackup,
-          adjacencyList: createAdjacencyList(state.graphBackup),
           nodeCounter: count,
         };
       });
-    },
-
-    setAdjacencyList: () => {
-      set((state) => ({ adjacencyList: createAdjacencyList(state.graph) }));
     },
 
     createNode: () => {
@@ -124,11 +123,7 @@ export const useGraphStore = create<GraphStore>((set) => {
         const newNode: Node = {
           id: counter.toString(),
           data: { label: "📡" },
-          style: {
-            width: 50,
-            height: 50,
-            fontSize: 20,
-          },
+          style: NODE_STYLE,
           position: {
             x: col * gridSize + offsetX,
             y: row * gridSize + offsetY,
@@ -154,7 +149,6 @@ export const useGraphStore = create<GraphStore>((set) => {
       set((state) => {
         const newEdge: Edge = {
           id: `${source}-${target}`,
-          label: `${source} -> ${target}`,
           source,
           target,
         };
