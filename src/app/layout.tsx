@@ -32,7 +32,7 @@ export default function RootLayout({
         className={`${interSans.variable} ${robotoMono.variable} antialiased`}
       >
         {children}
-        <Toaster expand={true} />
+        <Toaster expand richColors />
       </body>
     </html>
   );

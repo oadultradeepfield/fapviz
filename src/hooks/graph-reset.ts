@@ -5,7 +5,7 @@ import { toast } from "sonner";
 export function useGraphReset() {
   const { clearGraph, undoDeleteElements } = useGraphStore();
 
-  const handleReset = useCallback(() => {
+  return useCallback(() => {
     toast(
       "All transmitters were removed! You can start fresh or undo this action.",
       {
@@ -19,6 +19,4 @@ export function useGraphReset() {
     );
     clearGraph();
   }, [clearGraph, undoDeleteElements]);
-
-  return handleReset;
 }

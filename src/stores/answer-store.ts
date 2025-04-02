@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 interface AnswerStore {
-  chromaticIndex?: number;
-  setChromaticIndex: (chromaticIndex?: number) => void;
+  chromaticNumber?: number;
+  setchromaticNumber: (chromaticNumber?: number) => void;
 }
 
 export const useAnswerStore = create<AnswerStore>((set) => ({
-  chromaticIndex: undefined,
-  setChromaticIndex: (chromaticIndex?) => set({ chromaticIndex }),
+  chromaticNumber: undefined,
+  setchromaticNumber: (chromaticNumber?) => set({ chromaticNumber }),
 }));

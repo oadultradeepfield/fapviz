@@ -5,7 +5,7 @@ import { toast } from "sonner";
 export function useDeleteElements() {
   const { deleteSelectedElements, undoDeleteElements } = useGraphStore();
 
-  const handleDeleteElements = useCallback(() => {
+  return useCallback(() => {
     toast(
       "Selected elements were removed! You can proceed or undo this action.",
       {
@@ -19,6 +19,4 @@ export function useDeleteElements() {
     );
     deleteSelectedElements();
   }, [deleteSelectedElements, undoDeleteElements]);
-
-  return handleDeleteElements;
 }

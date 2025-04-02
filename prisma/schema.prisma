@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Graph {
+  id        String   @id @default(uuid())
+  nodes     Node[]
+  edges     Edge[]
+  createdAt DateTime @default(now())
+}
+
+model Node {
+  id        String @id @default(uuid())
+  nodeId    String
+  graphId   String
+  graph     Graph  @relation(fields: [graphId], references: [id], onDelete: Cascade)
+  positionX Float
+  positionY Float
+  degree    Int    @default(0)
+}
+
+model Edge {
+  id      String @id @default(uuid())
+  edgeId  String
+  graphId String
+  graph   Graph  @relation(fields: [graphId], references: [id], onDelete: Cascade)
+  source  String
+  target  String
+}

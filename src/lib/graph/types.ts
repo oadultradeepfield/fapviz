@@ -19,3 +19,8 @@ export enum TemplateGraphName {
 }
 
 export type AdjacencyList = Record<string, string[]>;
+
+export interface SaveGraphResponse {
+  id: string;
+  url: string;
+}
