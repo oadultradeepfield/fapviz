@@ -15,6 +15,7 @@ interface GraphStore {
   graphBackup: Graph;
   selectedNodes: string[];
   selectedEdges: string[];
+  setGraph: (graph: Graph) => void;
   setGraphFromTemplate: (graphName: TemplateGraphName) => void;
   setSelectedElements: ({ nodes, edges }: Graph) => void;
   clearGraph: () => void;
@@ -55,10 +56,22 @@ export const useGraphStore = create<GraphStore>((set) => {
 
   return {
     graph: loadGraphFromStorage(),
+    sharedGraphId: "",
     nodeCounter: loadCounterFromStorage(),
     graphBackup: TEMPLATE_GRAPHS.EMPTY_GRAPH,
     selectedNodes: [],
     selectedEdges: [],
+
+    setGraph: (graph) => {
+      set(() => {
+        saveGraphToStorage(graph);
+        saveCounterToStorage(graph.nodes.length);
+        return {
+          graph: graph,
+          nodeCounter: graph.nodes.length,
+        };
+      });
+    },
 
     setGraphFromTemplate: (graphName) => {
       set(() => {

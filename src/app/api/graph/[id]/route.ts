@@ -1,5 +1,5 @@
+import { NODE_STYLE } from "@/lib/graph/constants";
 import prisma from "@/lib/prisma";
-import { Position } from "@xyflow/react";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -7,8 +7,8 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   try {
-    const graphId = params.id;
-
+    const { id } = await params;
+    const graphId = id;
     const graph = await prisma.graph.findUnique({
       where: {
         id: graphId,
@@ -26,12 +26,11 @@ export async function GET(
     const formattedNodes = graph.nodes.map((node) => ({
       id: node.nodeId,
       data: { label: "📡" },
+      style: NODE_STYLE,
       position: {
         x: node.positionX,
         y: node.positionY,
       },
-      sourcePosition: Position.Right,
-      targetPosition: Position.Left,
       degree: node.degree,
       saturationDegree: 0,
     }));
