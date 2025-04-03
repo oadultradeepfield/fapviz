@@ -1,7 +1,6 @@
 import { useFetchGraphStore } from "@/stores/fetch-graph-store";
 import { useGraphStore } from "@/stores/graph-store";
 import { Position } from "@xyflow/react";
-import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -45,7 +44,6 @@ export function useFetchGraph() {
         );
       } finally {
         setIsFetched(true);
-        redirect("/");
       }
     }
 

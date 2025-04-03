@@ -1,4 +1,4 @@
-import { Copy } from "lucide-react";
+import { Copy, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -46,7 +46,7 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
             disabled={isSaving}
           >
             <span className="sr-only">Copy</span>
-            <Copy />
+            {isSaving ? <Loader2 className="animate-spin" /> : <Copy />}
           </Button>
         </div>
       </DialogContent>
