@@ -1,8 +1,10 @@
 "use client";
 
 import { useSaveGraph } from "@/hooks/save-graph";
+import { useGraphStore } from "@/stores/graph-store";
 import { useSidebarStore } from "@/stores/sidebar-store";
 import { Share } from "lucide-react";
+import { useEffect, useState } from "react";
 import AppLogo from "../common/app-logo";
 import { Icons } from "../ui/icons";
 import IconButton from "./icon-button";
@@ -12,6 +14,12 @@ import ToggleSidebarButton from "./toggle-sidebar-button";
 export default function Navigation() {
   const { setIsOpen } = useSidebarStore();
   const handleClickShare = useSaveGraph();
+  const { graph } = useGraphStore();
+  const [isGraphEmpty, setIsGraphEmpty] = useState(false);
+
+  useEffect(() => {
+    setIsGraphEmpty(graph.nodes.length === 0 && graph.edges.length === 0);
+  }, [graph]);
 
   const handleClickGithub = () => {
     window.open("https://www.github.com/oadultradeepfield/fapviz", "_blank");
@@ -32,6 +40,7 @@ export default function Navigation() {
                 aria-label="Share Current Graph"
                 onClick={handleClickShare}
                 tooltipMessage="Share"
+                disabled={isGraphEmpty}
               >
                 <Share className="scale-125" />
               </IconButton>

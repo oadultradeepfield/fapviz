@@ -12,6 +12,7 @@ interface IconButtonProps {
     | "outline"
     | "secondary"
     | "ghost";
+  disabled?: boolean;
 }
 
 export default function IconButton({
@@ -19,9 +20,10 @@ export default function IconButton({
   onClick,
   tooltipMessage,
   variant,
+  disabled,
 }: IconButtonProps) {
   const button = (
-    <Button onClick={onClick} variant={variant} size="icon">
+    <Button onClick={onClick} variant={variant} size="icon" disabled={disabled}>
       {children}
     </Button>
   );

@@ -6,13 +6,32 @@ import { toast } from "sonner";
 import { useCopyLink } from "./copy-link";
 
 export function useSaveGraph() {
-  const { setIsDialogOpen, setIsSaving, setLink } = useSaveStore();
-  const { graph } = useGraphStore();
+  const {
+    setIsDialogOpen,
+    setIsSaving,
+    setLink,
+    lastGraphVersion,
+    setLastGraphVersion,
+    cachedLink,
+    setCachedLink,
+  } = useSaveStore();
+
+  const { graph, graphVersion } = useGraphStore();
   const handleCopy = useCopyLink();
 
   return useCallback(async () => {
     try {
       setIsDialogOpen(true);
+
+      const graphUnchanged =
+        lastGraphVersion && graphVersion === lastGraphVersion;
+
+      if (graphUnchanged && cachedLink) {
+        setLink(cachedLink);
+        handleCopy();
+        return;
+      }
+
       setIsSaving(true);
 
       const response = await fetch("/api/graph", {
@@ -31,7 +50,9 @@ export function useSaveGraph() {
       }
 
       const data: SaveGraphResponse = await response.json();
+      setLastGraphVersion(graphVersion);
       setLink(data.url);
+      setCachedLink(data.url);
       handleCopy();
     } catch (error) {
       console.error("Error saving graph: ", error);
@@ -43,5 +64,16 @@ export function useSaveGraph() {
     } finally {
       setIsSaving(false);
     }
-  }, [setIsSaving, setLink, graph]);
+  }, [
+    setIsDialogOpen,
+    setIsSaving,
+    setLink,
+    graph,
+    graphVersion,
+    lastGraphVersion,
+    cachedLink,
+    setLastGraphVersion,
+    setCachedLink,
+    handleCopy,
+  ]);
 }

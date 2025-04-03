@@ -131,3 +131,7 @@ export const setNodeFill = (
     },
   };
 };
+
+export const isGraphEmpty = (graph: Graph) => {
+  return graph.nodes.length === 0 && graph.edges.length === 0;
+};

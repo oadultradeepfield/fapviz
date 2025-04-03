@@ -11,6 +11,7 @@ import { create } from "zustand";
 
 interface GraphStore {
   graph: Graph;
+  graphVersion: number;
   nodeCounter: number;
   graphBackup: Graph;
   selectedNodes: string[];
@@ -56,6 +57,7 @@ export const useGraphStore = create<GraphStore>((set) => {
 
   return {
     graph: loadGraphFromStorage(),
+    graphVersion: 0,
     sharedGraphId: "",
     nodeCounter: loadCounterFromStorage(),
     graphBackup: TEMPLATE_GRAPHS.EMPTY_GRAPH,
@@ -63,24 +65,26 @@ export const useGraphStore = create<GraphStore>((set) => {
     selectedEdges: [],
 
     setGraph: (graph) => {
-      set(() => {
+      set((state) => {
         saveGraphToStorage(graph);
         saveCounterToStorage(graph.nodes.length);
         return {
           graph: graph,
           nodeCounter: graph.nodes.length,
+          graphVersion: state.graphVersion + 1,
         };
       });
     },
 
     setGraphFromTemplate: (graphName) => {
-      set(() => {
+      set((state) => {
         const templateGraph = TEMPLATE_GRAPHS[graphName];
         saveGraphToStorage(templateGraph);
         saveCounterToStorage(templateGraph.nodes.length);
         return {
           graph: templateGraph,
           nodeCounter: templateGraph.nodes.length,
+          graphVersion: state.graphVersion + 1,
         };
       });
     },
@@ -101,6 +105,7 @@ export const useGraphStore = create<GraphStore>((set) => {
           graph: TEMPLATE_GRAPHS.EMPTY_GRAPH,
           graphBackup: backup,
           nodeCounter: 0,
+          graphVersion: state.graphVersion + 1,
         };
       });
     },
@@ -113,6 +118,7 @@ export const useGraphStore = create<GraphStore>((set) => {
         return {
           graph: state.graphBackup,
           nodeCounter: count,
+          graphVersion: state.graphVersion + 1,
         };
       });
     },
@@ -154,6 +160,7 @@ export const useGraphStore = create<GraphStore>((set) => {
         return {
           graph: newGraph,
           nodeCounter: state.nodeCounter + 1,
+          graphVersion: state.graphVersion + 1,
         };
       });
     },
@@ -171,6 +178,7 @@ export const useGraphStore = create<GraphStore>((set) => {
 
         return {
           graph: newGraph,
+          graphVersion: state.graphVersion + 1,
         };
       });
     },
@@ -186,6 +194,7 @@ export const useGraphStore = create<GraphStore>((set) => {
 
         return {
           graph: newGraph,
+          graphVersion: state.graphVersion + 1,
         };
       });
     },
@@ -213,6 +222,7 @@ export const useGraphStore = create<GraphStore>((set) => {
           selectedNodes: [],
           selectedEdges: [],
           nodeCounter: updatedCounter,
+          graphVersion: state.graphVersion + 1,
         };
       });
     },
